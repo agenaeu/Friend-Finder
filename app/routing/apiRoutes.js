@@ -3,6 +3,8 @@ let possibleFriends = require("../data/friends");
 let arrayOfScoreSums = [];
 let differenceOfScoreSums = [];
 let lowestScoreDifference = [];
+let manArray = [];
+let girlArray = [];
 let bestMatch = {
     name: "",
     gender: "",
@@ -28,6 +30,14 @@ module.exports = function (app) {
 
 
         let sumAllScores = function () {
+            if (possibleFriends[0].sexualPreference === "M"){
+                sortMale();
+                console.log(manArray);
+            }
+            else {
+                sortFemale();
+                console.log(girlArray);
+            }
             for (let i = 0; i < possibleFriends.length; i++) {
                 let matchScoreArray = possibleFriends[i].scores;
                 //console.log(matchScoreArray);
@@ -40,6 +50,7 @@ module.exports = function (app) {
             };
         };
         let findDifference = function () {
+            differenceOfScoreSums = [];
             for (let i = 1; i < arrayOfScoreSums.length; i++) {
 
                 let totalDifference = Math.abs(arrayOfScoreSums[0] - arrayOfScoreSums[i]);
@@ -80,8 +91,6 @@ module.exports = function (app) {
         }
         if (possibleFriends.length > 1) {
             findBestMatch();
-            //res.json(true); 
-            console.log(bestMatch);
             res.json(bestMatch);
             
         }
@@ -89,28 +98,22 @@ module.exports = function (app) {
             res.json(false);
         }
         
-      //  possibleFriends = [];
-       // possibleFriends.splice(0, 1);
+     
     });
-
-
-
-
-
-  /*   app.post('/api/clear', function (req, res) {
-        possibleFriends.length = [];
-        
-    
-        res.json({ ok: true });
-    
-    }); */
-
-
-
-
-
-
-    
-
-
 };
+let sortMale = function(){
+for (let i=0;i<possibleFriends.length;i++) {
+    //console.log(possibleFriends[i].gender);
+    if (possibleFriends[i].gender === "M") {
+        manArray.push(possibleFriends[i]);
+    }
+}
+}
+let sortFemale = function(){
+for (let i=0;i<possibleFriends.length;i++) {
+    //console.log(possibleFriends[i].gender);
+    if (possibleFriends[i].gender === "F") {
+        girlArray.push(possibleFriends[i]);
+    }
+}
+}
